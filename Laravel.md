@@ -7,3 +7,9 @@
             return app('url')->asset('public/'.$path, $secure);
     }
     `
+    
+    
+    Foregin Key
+    
+`
+            $table->foreign('attendance_id')->references('id')->on('attendances');`

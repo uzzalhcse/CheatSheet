@@ -1,4 +1,4 @@
-#Asset Function
+# Asset Function
 
 `function asset($path, $secure = null){
         if ($_SERVER['HTTP_HOST']=='127.0.0.1:8000')
@@ -11,7 +11,7 @@
     `
     
     
-    #Foregin Key
+   # Foregin Key
     
 `
             $table->foreign('attendance_id')->references('id')->on('attendances');`

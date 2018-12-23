@@ -15,3 +15,10 @@
     
 `
             $table->foreign('attendance_id')->references('id')->on('attendances');`
+
+
+# Route Groput with Prefix
+`
+Route::prefix('admin')->group(function() {
+    Route::get('/', 'AdminController');
+});`

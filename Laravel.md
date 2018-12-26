@@ -24,4 +24,4 @@ Route::prefix('admin')->group(function() {
 });`
 
 # common Facker Object
-`randomElement($array = array ('a','b','c')) // 'b'`
+`randomElement($array = array ('a','b','c')) // 'b' ref: ` https://github.com/fzaninotto/Faker

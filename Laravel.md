@@ -22,3 +22,6 @@
 Route::prefix('admin')->group(function() {
     Route::get('/', 'AdminController');
 });`
+
+# common Facker Object
+`randomElement($array = array ('a','b','c')) // 'b'`

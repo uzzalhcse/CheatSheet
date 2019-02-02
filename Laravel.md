@@ -33,3 +33,18 @@ Route::prefix('admin')->group(function() {
                 $file->move($destination, $photo);
                 $category->image= $photo;
         }
+# upload multiple images 
+        $images=array();
+
+        if($files=$request->file('images')){
+            foreach($files as $file){
+                $name= time().$file->getClientOriginalName();
+                $destination =public_path() . '/uploads/products';
+                $file->move($destination,$name);
+                $images[]=$name;
+            }
+        }
+        ImageProduct::insert( [
+            'image'=>  implode("|",$images),
+            'product_id' =>$product->id,
+        ]);

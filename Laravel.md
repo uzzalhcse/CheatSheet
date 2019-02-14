@@ -48,3 +48,8 @@ Route::prefix('admin')->group(function() {
             'image'=>  implode("|",$images),
             'product_id' =>$product->id,
         ]);
+ 
+ # Search with relational Tables
+         $user = User::with('Profile')->where('status', 1)->whereHas('Profile', function($q){
+            $q->where('gender', 'Male');
+        })->get();

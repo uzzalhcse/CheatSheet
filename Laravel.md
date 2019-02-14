@@ -17,13 +17,13 @@
 
 
 # Route Groput with Prefix
-`
-Route::prefix('admin')->group(function() {
-    Route::get('/', 'AdminController');
-});`
+
+        Route::prefix('admin')->group(function() {
+            Route::get('/', 'AdminController');
+        });
 
 # common Facker Object
-`randomElement($array = array ('a','b','c')) // 'b' ref: ` https://github.com/fzaninotto/Faker
+        randomElement($array = array ('a','b','c')) // 'b' ref:  https://github.com/fzaninotto/Faker
 
 # upload Single image file
         if ($request->file('image')){

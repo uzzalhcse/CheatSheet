@@ -53,3 +53,11 @@
          $user = User::with('Profile')->where('status', 1)->whereHas('Profile', function($q){
             $q->where('gender', 'Male');
         })->get();
+        
+ #Api with additional data
+ 
+        return TransactionLineResource::collection($result)->additional(['extra' => [
+            'balance' => $debit-$credit,
+            'debit' => $debit,
+            'credit' => $credit,
+        ]]);

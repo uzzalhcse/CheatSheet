@@ -81,139 +81,125 @@ Inside the `config/auth.php` file you will need to make a few changes to configu
     
    Then add the following:
    
-    <?php
+	<?php
 
-    namespace App\Http\Controllers;
+	namespace App\Http\Controllers;
 
-    use App\Http\Resources\DefaultResource;
-    use App\Person;
-    use App\User;
-    use Illuminate\Http\Request;
+	use App\User;
+	use Illuminate\Http\Request;
 
-    class AuthController extends Controller
-    {
-        /**
-         * Create a new AuthController instance.
-         *
-         * @return void
-         */
-        public function __construct()
-        {
-            $this->middleware('jwt', ['except' => ['login']]);
-        }
+	class AuthController extends Controller
+	{
+	    /**
+	     * Create a new AuthController instance.
+	     *
+	     * @return void
+	     */
+	    public function __construct()
+	    {
+		$this->middleware('jwt', ['except' => ['login']]);
+	    }
 
-        /**
-         * Get a JWT via given credentials.
-         *
-         * @return \Illuminate\Http\JsonResponse
-         */
-        public function login(Request $request)
-        {
-            $email = $request->email;
-            $password = $request->password;
+	    /**
+	     * Get a JWT via given credentials.
+	     *
+	     * @return \Illuminate\Http\JsonResponse
+	     */
+	    public function login()
+	    {
+		$credentials = request(['email', 'password']);
 
-            $result = Person::where('email',$email)->first();
-            if (!isset($result)){
-                return response()->json(
-                    [
-                        'code'=>401,
-                        'status'=>'error',
-                        'message' => 'Unauthorized'
-                    ]
-                    , 401);
-            }
-            if ($result->password==$password) {
-                $token = auth()->login($result);
-                return $this->respondWithToken($token);
-            }else
-                return response()->json(
-                    [
-                        'code'=>401,
-                        'status'=>'error',
-                        'message' => 'Unauthorized'
-                    ]
-                    , 401);
-        }
+		if (! $token = auth()->attempt($credentials)) {
+		    return response()->json(
+			[
+			    'code'=>401,
+			    'status'=>'error',
+			    'message' => 'Unauthorized'
+			]
+			, 401);
+		}
 
-        /**
-         * Get the authenticated User.
-         *
-         * @return \Illuminate\Http\JsonResponse
-         */
-        public function me()
-        {
-            if (auth()->check()){
-                return response()->json(
-                    [
-                        'code'=>200,
-                        'status'=>'success',
-                        'message'=>'User Info Fetched',
-                        'data'=> [
-                            'user' => Person::with('Roles','Position','PositionTags')->find(auth()->user()->id)
-                        ]
-                    ]
-                );
-            }
+		return $this->respondWithToken($token);
+	    }
 
-            return response()->json(
-                [
-                    'code'=>401,
-                    'status'=>'error',
-                    'message' => 'Unauthorized'
-                ]
-                , 401);
-        }
+	    /**
+	     * Get the authenticated User.
+	     *
+	     * @return \Illuminate\Http\JsonResponse
+	     */
+	    public function me()
+	    {
+		if (auth()->check()){
+		    return response()->json(
+			[
+			    'code'=>200,
+			    'status'=>'success',
+			    'message'=>'User Info Fetched',
+			    'data'=> [
+				'user' => User::with('Roles')->find(auth()->user()->id)
+			    ]
+			]
+		    );
+		}
 
-        /**
-         * Log the user out (Invalidate the token).
-         *
-         * @return \Illuminate\Http\JsonResponse
-         */
-        public function logout()
-        {
-            auth()->logout();
+		return response()->json(
+		    [
+			'code'=>401,
+			'status'=>'error',
+			'message' => 'Unauthorized'
+		    ]
+		    , 401);
+	    }
 
-            return response()->json(
-                [
-                    'code'=>200,
-                    'status'=>'success',
-                    'message' => 'Successfully logged out'
-                ]
-            );
-        }
+	    /**
+	     * Log the user out (Invalidate the token).
+	     *
+	     * @return \Illuminate\Http\JsonResponse
+	     */
+	    public function logout()
+	    {
+		auth()->logout();
 
-        /**
-         * Refresh a token.
-         *
-         * @return \Illuminate\Http\JsonResponse
-         */
-        public function refresh()
-        {
-            return $this->respondWithToken(auth()->refresh());
-        }
+		return response()->json(
+		    [
+			'code'=>200,
+			'status'=>'success',
+			'message' => 'Successfully logged out'
+		    ]
+		);
+	    }
 
-        /**
-         * Get the token array structure.
-         *
-         * @param  string $token
-         *
-         * @return \Illuminate\Http\JsonResponse
-         */
-        protected function respondWithToken($token)
-        {
-            return response()->json([
-                'code'=>200,
-                'status'=>'success',
-                'message'=>'Login Success',
-                'data'=> [
-                    'login'=>[
-                        'token' => $token,
-                        'token_type' => 'bearer',
-                    ]
-                ]
-            ]);
-        }
-    }
+	    /**
+	     * Refresh a token.
+	     *
+	     * @return \Illuminate\Http\JsonResponse
+	     */
+	    public function refresh()
+	    {
+		return $this->respondWithToken(auth()->refresh());
+	    }
+
+	    /**
+	     * Get the token array structure.
+	     *
+	     * @param  string $token
+	     *
+	     * @return \Illuminate\Http\JsonResponse
+	     */
+	    protected function respondWithToken($token)
+	    {
+		return response()->json([
+		    'code'=>200,
+		    'status'=>'success',
+		    'message'=>'Login Success',
+		    'data'=> [
+			'token' => $token,
+			'token_type' => 'bearer',
+		    ]
+		]);
+	    }
+	}
+
 # Exception handling
 replace following code  in `Exceptions/Handler.php` 
 

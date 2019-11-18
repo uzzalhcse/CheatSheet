@@ -61,3 +61,14 @@
             'debit' => $debit,
             'credit' => $credit,
         ]]);
+        
+ #Api with additional data
+        public static function boot()
+            {
+                parent::boot();
+                self::creating(function ($model) {
+                    if (empty($model->id)) {
+                        $model->id = Str::uuid()->toString();
+                    }
+                });
+            }

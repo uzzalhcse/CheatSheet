@@ -1,7 +1,7 @@
 
 # Add this code into composer
 
-    "tymon/jwt-auth": "^1.0.0-rc.5"
+    "tymon/jwt-auth": "^1.0.0-rc.5.1"
 
 
 # Run those command

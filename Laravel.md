@@ -92,3 +92,15 @@
             // something went wrong
         }
         
+       
+  #Laravel Mongo DB Transaction
+ 
+        $session = DB::getMongoClient()->startSession();
+        $session->startTransaction();
+        try {
+            // Perform actions.
+            $session->commitTransaction();
+        } catch(\Exception $e) {
+            $session->abortTransaction();
+        }
+        

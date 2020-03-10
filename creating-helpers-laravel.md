@@ -1,6 +1,7 @@
 # Using Composer to Autoload Files
 
 First one is pretty easy and straightforward. Simply go to composer.json file located in your Laravel project and you will see autoload key. Composer has a files key (an array of file paths that you want to autoload) that you can use in your autoload key. It will look like this:
+
 	"autoload": {
 	    "files": [
 		"app/Helpers/Helper.php"

@@ -45,12 +45,12 @@ In the register method, we include our dependencies. In a large-scale project, i
 		require_once($file);
 	    }
 	}
-It will require all of the files present in the app/Helpers directory.
-Now that our service provider is completed, we need to register our service provider, so, that Laravel will load it during bootstrapping. For this, go to config/app.php and add the following line in the providers array at the end.
+It will require all of the files present in the `app/Helpers` directory.
+Now that our service provider is completed, we need to register our service provider, so, that Laravel will load it during bootstrapping. For this, go to `config/app.php` and add the following line in the providers array at the end.
 
 
 	App\Providers\HelperServiceProvider::class,
-If your helper file involves a class that has those helper methods and you have specified namespace, you could use them with little effort by defining an alias. You can do that easily by adding the following at the end of the aliases array in config/app.php file.
+If your helper file involves a class that has those helper methods and you have specified namespace, you could use them with little effort by defining an alias. You can do that easily by adding the following at the end of the aliases array in `config/app.php` file.
 
 
 	'Helper' => App\Helpers\Helper::class,

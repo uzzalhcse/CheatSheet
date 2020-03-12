@@ -1,6 +1,6 @@
 # Using Composer to Autoload Files
 
-First one is pretty easy and straightforward. Simply go to composer.json file located in your Laravel project and you will see autoload key. Composer has a files key (an array of file paths that you want to autoload) that you can use in your autoload key. It will look like this:
+First one is pretty easy and straightforward. Simply go to `composer.json` file located in your Laravel project and you will see autoload key. Composer has a files key (an array of file paths that you want to autoload) that you can use in your autoload key. It will look like this:
 
 	"autoload": {
 	    "files": [
@@ -24,7 +24,7 @@ Now your helper file will be automatically loaded in your Laravel project.
 Let’s see how you can use service providers to autoload Helper file. Go to the command line in the root of your application and run the following command to create a new service provider.
 
 
-php artisan make:provider HelperServiceProvider
+	php artisan make:provider HelperServiceProvider
 You will see this message logged onto your console screen
 
 Provider created successfully.
